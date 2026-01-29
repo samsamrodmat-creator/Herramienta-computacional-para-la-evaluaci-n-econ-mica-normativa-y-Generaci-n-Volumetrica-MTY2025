@@ -1,0 +1,61 @@
+# Manual de Usuario: Algoritmo NoNA
+
+> [!NOTE]
+> **ATRIBUCIÓN ACADÉMICA**
+>
+> **Algoritmo de prefactibilidad económica desarrollado por Samuel Rodríguez Matus**
+>
+> Tesis de Maestría en Arquitecturas Avanzadas por la Universidad de Monterrey.  
+> Asesorado por: **Arq. M.S.c Andrés Obregón López**.
+>
+> *Este proyecto calcula la viabilidad de proyectos habitacionales mediante análisis normativo, costos directos/indirectos, usos mixtos, estacionamiento y simulación de rentabilidad. Uso exclusivamente académico.*
+
+---
+
+## Introducción
+La herramienta **NoNA** es un componente para Grasshopper diseñado para agilizar la toma de decisiones en etapas tempranas de diseño. Permite al arquitecto evaluar instantáneamente la viabilidad financiera de una propuesta volumétrica, asegurando el cumplimiento de la normativa urbana y objetivos de inversión.
+
+## Guía de Configuración
+Para obtener resultados precisos, asegúrese de conectar correctamente los parámetros en la interfaz de Grasshopper:
+
+### 1. Definición del Sitio
+*   **`area_terreno`**: Conecte la geometría (Surface) de su terreno.
+*   **`valor_terreno`**: Ingrese el costo de adquisición del suelo ($/m²).
+*   **`curva_retiros`**: Ingrese la curva que define el área libre de construcción permitida.
+
+### 2. Normativa (Cédula Urbanística)
+Transcriba los valores de su lineamiento oficial:
+*   **`COS` / `CAS` / `CUS`**: Coeficientes decimales (Ej. 0.70, 2.5).
+*   **`H_Max`**: Altura máxima en metros.
+*   **`Altura_Entrepisos`**: Altura promedio deseada (Ej. 3.5m).
+
+### 3. Definición del Producto
+*   **`usos_mixtos`**: Active (True) si el proyecto incluye comercio en planta baja.
+*   **`n_viviendas`**: Número total de departamentos a desarrollar.
+*   **`areaCirculacionPorcentaje`**: Porcentaje estimado para pasillos, escaleras y elevadores (Recomendado: 0.15 - 0.20).
+
+### 4. Parámetros Económicos
+*   **`costoMetroConstruccion`**: Costo directo estimado por m² (Obra gris + Acabados).
+*   **`Costo_de_venta_m2`**: Precio de venta promedio estimado por m² en la zona.
+*   **`utilidadDeseada`**: Retorno de inversión meta (%).
+*   **`estacionamiento`**: Active para calcular costos de sótanos según normativa por zona.
+
+## Interpretación de Resultados
+Utilice componentes de "Panel" para visualizar los siguientes indicadores clave:
+
+> [!TIP]
+> **Indicadores Principales**
+> *   **Costo_Total_Construccion**: La inversión total requerida (Terreno + Obra + Indirectos).
+> *   **Utilidad_Final**: Porcentaje de ganancia calculado sobre la inversión.
+> *   **Costos_Indirectos**: Desglose de "Soft Costs" (Licencias, Honorarios, Marketing).
+
+### Simulación de Precios (Goal Seeking)
+Si activa la opción `correrSimulacion`, el algoritmo buscará automáticamente cuál debe ser el **Precio de Venta Total** mínimo para alcanzar su `utilidadDeseada`. Verifique el output **`Nuevo_Precio_venta`** para ver este resultado.
+
+## Solución de Problemas
+1.  **Alerta "Demasiados locales":** Reduzca el número de locales o revise el área comercial disponible.
+2.  **Exportación de Excel fallida:** Verifique que la ruta de la carpeta (`ruta_carpeta`) sea correcta y que tenga permisos de escritura.
+3.  **Valores negativos:** Revise que sus costos base no superen el precio de venta por un margen excesivo.
+
+---
+*Manual generado para fines académicos - Universidad de Monterrey - 2026*
